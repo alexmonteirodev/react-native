@@ -1,0 +1,25 @@
+Para criar o ambiente de desenvolvimento vamos utilizar o expo.
+
+basicamente o Expo funciona como um vite para facilitar a criação do ambiente de desenvolviemnto mas trás uns benefícios a mais por ser um framework, portanto o expo está para o react native assim como o next está para o react.
+
+// react native: https://reactnative.dev/docs/environment-setup
+
+para criar o diretório basta rodar: npx create-expo-app@latest .
+
+Após instalar para rodar o npm run dev, podemos utilizar via o proprio iphone fisico e escanear um qrcode que já nos leva para nosso app ou usar um simulator, que para isso precisa do programa do xCode que é basicamente um vscode da apple, porém, podemos usar o xcode para exibir o simulator enquanto codamos pelo vscode.
+
+para rodar o npm run dev usamos o: npx expo start --ios
+
+após isso vc já tem o app rodando in live porém ele vem com umas configs de boas vindas, para resetar isso, temos uma pasta que se chama scripts > reset-project.js qu serve justamente para resetar o app e deixar ele em branco, assim fica mais facil sem ter que ficar apagando paginas que não precisamos. Pra isso basta rodar 'npm run reset-project' e depois selecionar 'no' e pronto.
+
+depois disso da um npx expo start e aperta 'R' para reload do app.
+
+// Expo: https://docs.expo.dev/
+
+Resumindo: Expo é um Framework + toolchain para mobile com React Native.
+
+Então o Expo:
+	•	É mais parecido com o Next.js, no sentido de ser um framework completo que te dá estrutura, ferramentas e convenções.
+	•	Mas também se comporta como o Vite/Webpack no sentido de rodar um dev server que faz “hot reload”, builds etc.
+
+Obs: Expo é opcional. Você pode usar o React Native puro (via React Native CLI), mas vai precisar configurar o Xcode e Android Studio manualmente, instalar bibliotecas nativas manualmente etc. Com Expo, muita coisa vem pronta.

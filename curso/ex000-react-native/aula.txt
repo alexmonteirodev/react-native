@@ -1,0 +1,9 @@
+porque usar react native?
+
+3 coisas que deixam mais rapido
+
+flutter
+
+ios e android com 1 codigo
+
+expo?

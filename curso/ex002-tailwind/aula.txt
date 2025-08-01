@@ -1,0 +1,65 @@
+Existe o Tailwind e existe o NativeWind, que foi criado basicament epara atender ao React Native.
+
+Tailwind está para React
+x
+NativeWind está para ReactNative
+
+funciona da mesma forma em ambos.
+
+NativeWind: https://www.nativewind.dev/docs/getting-started/installation
+
+para instalar basta rodar:
+
+npm install nativewind react-native-reanimated@~3.17.4 react-native-safe-area-context@5.4.0
+npm install --dev tailwindcss@^3.4.17 prettier-plugin-tailwindcss@^0.5.11
+
+depois rode:
+'npx tailwindcss init' para criar uma pasta de config do tailwind
+
+add as novas configs:
+
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  // NOTE: Update this to include the paths to all files that contain Nativewind classes.
+  content: ["./App.tsx", "./components/**/*.{js,jsx,ts,tsx}"],
+  presets: [require("nativewind/preset")],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+
+depois basta ir no app, criar um arquivo global.css e importar:
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+Depois disso, na raiz do projeto, crie o arquivo 'babel.config.js' e cole:
+
+module.exports = function (api) {
+  api.cache(true);
+  return {
+    presets: [
+      ["babel-preset-expo", { jsxImportSource: "nativewind" }],
+      "nativewind/babel",
+    ],
+  };
+};
+
+Após isso, no terminal rode 'npx expo customize metro.config.js', vai criar um pasta e nela colamos:
+
+const { getDefaultConfig } = require("expo/metro-config");
+const { withNativeWind } = require('nativewind/metro');
+ 
+const config = getDefaultConfig(__dirname)
+ 
+module.exports = withNativeWind(config, { input: './global.css' })
+
+depois vai no layout do app e importa o globals.css
+
+agora, no root novamente, crie uma file 'nativewind-env.d.ts'. Isto é para caso esteja usando TypeScript e o TS reconheça o tailwind e não gere erros e cole: 
+/// <reference types="nativewind/types" />
+
+verifique a pasta metro.config e tenha certeza que aponta para pasta correta onde importou o tailwind porque a config de metro que colamos é do site do tailwind e em geral nosso globals fica dentro de app e não no root, logo é app/globals e não /globals
+
+após tudo isso de um cntrl c no terminal, rode: 'npx expo start --clear' para reinicar o app e 'R'
