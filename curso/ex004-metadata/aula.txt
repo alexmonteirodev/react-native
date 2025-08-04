@@ -1,0 +1,56 @@
+dentro de app é bom criar a estrutura de rotas em uma pasta chamada (tabs) para saber todas as abas do app. para definir a metadata/nome da pasta atual na parte superior do iphone, nós criamos vamos no _layout.tsx do root:
+
+
+import { Stack } from "expo-router";
+import "./globals.css";
+
+export default function RootLayout() {
+  return <Stack />;
+}
+
+e usamos o 'Stack.Screen':
+
+import { Stack } from "expo-router";
+import "./globals.css";
+
+export default function RootLayout() {
+  return (
+    <Stack>
+      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack.Screen name="movie/[id]" options={{ headerShown: false }} />
+    </Stack>
+  );
+}
+
+obs: isso serve para esconder a metadata do header de (tabs). agora ao invés de mostrar (tabs)/index, mostra só index...
+
+mas para tirar o header da metadata completamente, temos que ir no layout dentro de (tabs) e usamos o 'Tabs':
+
+import { View, Text } from "react-native";
+import React from "react";
+import { Tabs } from "expo-router";
+
+const _layout = () => {
+  return (
+    <Tabs>
+      <Tabs.Screen
+        name="index"
+        options={{
+          title: "home",
+          headerShown: false,
+        }}
+      />
+    </Tabs>
+  );
+};
+
+export default _layout;
+
+agora é só fazer para todas as pages.
+
+obs: agora não mostramos o index tbm.
+
+OBS: note que ele gera uma navBar
+
+Detalhe: da pra tirar a label diretamente pelo Tabs, pela prop screenOptions
+

@@ -1,3 +1,4 @@
+busque por app.json e vai abrir esse arquivo:
 {
   "expo": {
     "name": "teste",
@@ -40,3 +41,5 @@
     }
   }
 }
+
+nele podemos mudar os caminhos das imagens como logo/favicon ou nome em name
