@@ -1,0 +1,30 @@
+basicamente ao renderizar itens na tela usamos o map e passamos a key, aqui o que acontece é que usamos uma FlatList e nela para usar o 'map' usamos o renderItem como atributo e tbm passamos o keyExtractor como atributo, como se fosse a 'key'
+
+ <FlatList
+    data={data}
+    renderItem={({ item }) => (
+    <Text className="text-white text-sm">{item.title}</Text>
+    )}
+    keyExtractor={(item)=>item.id}
+/>
+
+O que é a FlatList?
+A FlatList é um componente que renderiza apenas os itens visíveis na tela, ao invés de todos de uma vez — isso melhora muito a performance, especialmente com listas grandes. basicamente é uma div de uma lista com um overflow e um snap já implementado.
+
+Por que usar a FlatList (e não um .map() simples)?
+	1.	Performance:
+A FlatList renderiza os itens sob demanda (lazy loading), diferente do .map() que renderiza todos de uma vez.
+	2.	Reciclagem de Views (virtualização):
+Itens fora da tela são “descarregados” da memória.
+	3.	Scroll automático:
+Já vem com suporte a scroll nativo e fluido.
+	4.	Recursos extras nativos:
+Suporte a cabeçalhos, rodapés, separadores, pull-to-refresh e carregamento infinito.
+
+Existem outros tipos de lists:
+
+ FlatList - Para listas simples e longas, com melhor desempenho.
+
+SectionList - Para listas agrupadas por seções (como uma agenda com datas ou contatos por letra).
+
+ ScrollView (com .map()) - Renderiza todos os elementos de uma vez — bom para listas curtas.
