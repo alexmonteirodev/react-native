@@ -9,14 +9,31 @@ import {
   View,
 } from "react-native";
 import SearchBar from "../components/home/searchBar";
-import { useRouter } from "expo-router";
 import useFetch from "@/hooks/useFetch";
 import { fetchMovies } from "@/services/api";
+import MovieCard from "../components/MovieCard";
+import React from "react";
 
 export default function Index() {
-  const router = useRouter();
+  const [searchQuery, setSearchQuery] = React.useState("");
 
-  const { data, loading, error } = useFetch(() => fetchMovies({ query: "" }));
+  const { data, loading, error, fetchData, reset } = useFetch(() =>
+    fetchMovies({ query: searchQuery })
+  );
+
+  //debounce
+  React.useEffect(() => {
+    const timeoutId = setTimeout(async () => {
+      if (searchQuery.length > 0) {
+        await fetchData();
+      } else {
+        reset();
+        fetchData();
+      }
+    }, 500);
+
+    return () => clearTimeout(timeoutId);
+  }, [searchQuery]);
 
   return (
     <View className="flex-1 bg-primary">
@@ -29,33 +46,79 @@ export default function Index() {
       >
         <Image source={icons.logo} className="w-12 h-10 mt-20 mb-5 mx-auto" />
 
+        <SearchBar
+          placeholder="Search for a movie"
+          value={searchQuery}
+          onChangeText={(txt: string) => setSearchQuery(txt)}
+        />
         {loading ? (
           <ActivityIndicator
             size="large"
-            color="#0000ff"
+            color="#AB8BFF"
             className="mt-10 self-center"
           />
         ) : error ? (
           <Text>Error: {error?.message}</Text>
         ) : (
-          <View className="flex-1 mt-25">
-            <SearchBar
-              onPress={() => router.push("/search")}
-              placeholder="Search for a movie"
-            />
-            <>
-              <Text className="text-lg text-white font-bold mt-5 mb-3">
-                Latest Movies
-              </Text>
-              <FlatList
-                data={data}
-                renderItem={({ item }) => (
-                  <Text className="text-white text-sm">{item.title}</Text>
-                )}
-                keyExtractor={(item) => item.id}
-              />
-            </>
-          </View>
+          <>
+            <View className="flex-1 mt-25">
+              {searchQuery.length > 0 ? (
+                <Text className="text-lg text-white font-bold mt-5 mb-3">
+                  Search Results for{" "}
+                  <Text className="font-bold text-[#AB8BFF]">
+                    {searchQuery}
+                  </Text>
+                </Text>
+              ) : (
+                <Text className="text-lg text-white font-bold mt-5 mb-3">
+                  Latest Movies
+                </Text>
+              )}
+
+              {!loading && !error ? (
+                searchQuery.length <= 0 ? (
+                  <FlatList
+                    data={data}
+                    renderItem={({ item }) => <MovieCard {...item} />}
+                    keyExtractor={(item) => item.id}
+                    numColumns={3}
+                    columnWrapperStyle={{
+                      justifyContent: "flex-start",
+                      gap: 20,
+                      paddingRight: 5,
+                      marginBottom: 10,
+                    }}
+                    className="mt-2 pb-32 m-auto"
+                    scrollEnabled={false}
+                  />
+                ) : (
+                  <FlatList
+                    data={data}
+                    renderItem={({ item }) => <MovieCard {...item} />}
+                    keyExtractor={(item) => item.id}
+                    numColumns={3}
+                    columnWrapperStyle={{
+                      justifyContent: "flex-start",
+                      gap: 20,
+                      paddingRight: 5,
+                      marginBottom: 10,
+                    }}
+                    className="mt-2 pb-32 m-auto"
+                    scrollEnabled={false}
+                    ListEmptyComponent={
+                      <View className="">
+                        <Text className="text-center text-gray-500">
+                          {searchQuery.length > 0 ? "Not movies found" : ""}
+                        </Text>
+                      </View>
+                    }
+                  />
+                )
+              ) : (
+                <Text>Um erro ocorreu: {error}</Text>
+              )}
+            </View>
+          </>
         )}
       </ScrollView>
     </View>
