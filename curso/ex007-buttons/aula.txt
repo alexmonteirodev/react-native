@@ -1,0 +1,26 @@
+Em React Native, os eventos de click não existem exatamente como no navegador (onClick). Em vez disso, você usa componentes que suportam toque, e os eventos são chamados de onPress, onLongPress, etc. Aqui está um resumo dos mais comuns:
+
+⸻
+
+1. TouchableOpacity / TouchableHighlight / TouchableWithoutFeedback
+
+Estes são wrappers para tornar qualquer área “clicável”:
+
+<TouchableOpacity onPress={() => console.log("Clicou!")}>
+  <Text>Clique aqui</Text>
+</TouchableOpacity>
+
+
+⸻
+
+2. Pressable (mais moderno, flexível)
+
+Pressable permite reagir a vários estados de toque:
+
+<Pressable
+  onPress={() => console.log("Clicou!")}
+  onLongPress={() => console.log("Segurou!")}
+  onPressIn={() => console.log("Pressionou!")}
+  onPressOut={() => console.log("Soltou!")}>
+  <Text>Botão Pressable</Text>
+</Pressable>
