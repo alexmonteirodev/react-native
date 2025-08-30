@@ -23,3 +23,5 @@ Então o Expo:
 	•	Mas também se comporta como o Vite/Webpack no sentido de rodar um dev server que faz “hot reload”, builds etc.
 
 Obs: Expo é opcional. Você pode usar o React Native puro (via React Native CLI), mas vai precisar configurar o Xcode e Android Studio manualmente, instalar bibliotecas nativas manualmente etc. Com Expo, muita coisa vem pronta.
+
+depois de criar o ambiente, rode 'npm run reset-project' -> n, para resetar o projeto e apagar as configs de fabrica e ficar mais facil para inicializar
